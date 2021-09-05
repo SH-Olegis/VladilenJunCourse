@@ -31,4 +31,10 @@ export default class DonateList {
             this.#donatesList.append(donateHTML)
         })
     }
+
+    updateDonates(updatedDonates) {
+        this.#donatesList.innerHTML = ''
+        this.donates = updatedDonates
+        this.renderDonates()
+    }
 }
