@@ -1,3 +1,5 @@
+import * as constans from "../core/constans/settings";
+
 export default class DonateForm {
     constructor(totalAmount, createNewDonate) {
         this.totalAmount = totalAmount
@@ -40,8 +42,8 @@ export default class DonateForm {
         this.btnSubmitHTML.className = 'donate-form__submit-button'
         this.btnSubmitHTML.type = 'submit'
 
-        this.titleHTML.textContent = this.totalAmount
-        this.labelHTML.textContent = 'Введите сумму в $'
+        this.titleHTML.textContent = this.totalAmount + constans.Settings.currency
+        this.labelHTML.textContent = `Введите сумму в ${ constans.Settings.currency }`
         this.btnSubmitHTML.textContent = 'Задонатить'
 
         this.labelHTML.append(this.inputHTML)
@@ -54,7 +56,7 @@ export default class DonateForm {
 
     updateTotalAmount(newAmount) {
         this.totalAmount = newAmount
-        this.titleHTML.textContent = this.totalAmount
+        this.titleHTML.textContent = this.totalAmount + constans.Settings.currency
         this.inputHTML.value = ''
     }
 }

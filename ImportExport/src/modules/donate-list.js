@@ -1,3 +1,5 @@
+import { Settings } from "../core/constans/settings";
+
 export default class DonateList {
     #donatesContainerHTML
     #titleHTML
@@ -26,7 +28,7 @@ export default class DonateList {
         this.donates.forEach(donate => {
             const donateHTML = document.createElement('div')
             donateHTML.className = 'donate-item'
-            donateHTML.innerHTML = `${donate.date} - <b>${donate.amount}</b>`
+            donateHTML.innerHTML = `${donate.date} - <b>${donate.amount}${ Settings.currency }</b>`
 
             this.#donatesList.append(donateHTML)
         })
