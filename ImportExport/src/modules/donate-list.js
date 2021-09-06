@@ -1,4 +1,5 @@
 import { Settings } from "../core/constans/settings";
+import { getFormattedTime } from "../core/utils/index";
 
 export default class DonateList {
     #donatesContainerHTML
@@ -27,8 +28,9 @@ export default class DonateList {
     renderDonates() {
         this.donates.forEach(donate => {
             const donateHTML = document.createElement('div')
+            const formatDate = getFormattedTime(donate.date)
             donateHTML.className = 'donate-item'
-            donateHTML.innerHTML = `${donate.date} - <b>${donate.amount}${ Settings.currency }</b>`
+            donateHTML.innerHTML = `${formatDate} - <b>${donate.amount}${ Settings.currency }</b>`
 
             this.#donatesList.append(donateHTML)
         })
