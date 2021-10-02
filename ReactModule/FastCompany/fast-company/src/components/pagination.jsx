@@ -1,23 +1,50 @@
-import React from "react";
+import React from "react"
+import PropTypes from "prop-types"
+import _ from "lodash"
 
-const Pagination = ({onChangePage, countPage}) => {
-    const renderPages = () => {
-        const content = []
+const Pagination = ({
+    onChangePage,
+    countUsersOnPage,
+    countUsers,
+    currentPage
+}) => {
+    const pageCount = Math.ceil(countUsers / countUsersOnPage)
+    const pages = _.range(1, pageCount + 1)
 
-        for(let idxPage = 1; idxPage <= countPage; idxPage++) {
-            content.push(<li className="page-item" onClick={() => {onChangePage(idxPage)}} key={idxPage}><a className="page-link" href="#">{idxPage}</a></li>)
-        }
+    if (pageCount === 1) return null
 
-        return content
-    }
+    return (
+        <nav aria-label="Page navigation example">
+            <ul className="pagination">
+                {pages.map((idxPage) => {
+                    return (
+                        <li
+                            className={
+                                "page-item " + idxPage === currentPage
+                                    ? "active"
+                                    : ""
+                            }
+                            onClick={() => {
+                                onChangePage(idxPage)
+                            }}
+                            key={idxPage}
+                        >
+                            <a className="page-link" href="#">
+                                {idxPage}
+                            </a>
+                        </li>
+                    )
+                })}
+            </ul>
+        </nav>
+    )
+}
 
-    return <nav aria-label="Page navigation example">
-        <ul className="pagination">
-            {
-                renderPages()
-            }
-        </ul>
-    </nav>
+Pagination.propTypes = {
+    onChangePage: PropTypes.func.isRequired,
+    countUsersOnPage: PropTypes.number.isRequired,
+    countUsers: PropTypes.number.isRequired,
+    currentPage: PropTypes.number.isRequired
 }
 
 export default Pagination
