@@ -2,9 +2,10 @@ import React from "react"
 import User from "./user"
 import PropTypes from "prop-types"
 
-const Users = ({ users, favourites, ...funcs }) => {
+const Users = ({ users, favourites, children, ...funcs }) => {
     return (
-        <>
+        <div className="d-flex flex-column">
+            {children[0]}
             <table
                 className="table"
                 style={{ display: users.length === 0 ? "none" : "" }}
@@ -31,13 +32,15 @@ const Users = ({ users, favourites, ...funcs }) => {
                     ))}
                 </tbody>
             </table>
-        </>
+            {children[1]}
+        </div>
     )
 }
 
 Users.propTypes = {
-    users: PropTypes.object.isRequired,
-    favourites: PropTypes.array.isRequired
+    users: PropTypes.array.isRequired,
+    favourites: PropTypes.array.isRequired,
+    children: PropTypes.array
 }
 
 export default Users
