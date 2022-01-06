@@ -5,10 +5,15 @@ import Pagination from "./pagination"
 import GroupList from "./groupList"
 import SearchStatus from "./searchStatus"
 import UserTable from "./userTable"
+import { useParams } from "react-router-dom"
 import API from "../api"
 import _ from "lodash"
+import User from "./user"
 
 const Users = () => {
+    const params = useParams()
+    const { userId } = params
+
     const [users, setUsers] = useState()
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId))
@@ -67,11 +72,16 @@ const Users = () => {
             : users
 
         const count = filteredUsers.length
-        const sortUsers = _.orderBy(filteredUsers, [sortBy.iter], [sortBy.order])
+        const sortUsers = _.orderBy(
+            filteredUsers,
+            [sortBy.iter],
+            [sortBy.order]
+        )
         const usersCrop = paginate(sortUsers, currentPage, pageSize)
 
-        return (
-            <div className="d-flex">
+        return userId
+            ? <User id={userId} users={users} />
+            : (<div className="d-flex">
                 {professions && (
                     <div className="d-flex flex-column flex-shrink-0 p-3">
                         <GroupList
@@ -110,9 +120,9 @@ const Users = () => {
                     </div>
                 </div>
             </div>
-        )
+            )
     } else {
-        return "loading..."
+        return <h1>Loading</h1>
     }
 }
 Users.propTypes = {
