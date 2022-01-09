@@ -7,12 +7,15 @@ import GroupList from "./groupList"
 import SearchStatus from "./searchStatus"
 import UserTable from "./usersTable"
 import _ from "lodash"
+import Search from "./search"
+
 const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [professions, setProfession] = useState()
     const [selectedProf, setSelectedProf] = useState()
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" })
     const pageSize = 8
+    const [searchWords, setSearchWords] = useState("")
 
     const [users, setUsers] = useState()
     useEffect(() => {
@@ -41,6 +44,7 @@ const UsersList = () => {
 
     const handleProfessionSelect = (item) => {
         setSelectedProf(item)
+        setSearchWords("")
     }
 
     const handlePageChange = (pageIndex) => {
@@ -50,14 +54,37 @@ const UsersList = () => {
         setSortBy(item)
     }
 
+    const clearFilter = () => {
+        setSelectedProf()
+        setSearchWords("")
+    }
+
+    const handleChangeSearch = ({ target }) => {
+        setSelectedProf()
+
+        setSearchWords(target.value)
+    }
+
+    useEffect(() => {
+        if (searchWords.length && currentPage !== 1) {
+            setCurrentPage(1)
+        }
+    }, [searchWords])
+
     if (users) {
+        const searchedUsers = searchWords
+            ? users.filter(user => {
+                return user.name.match(searchWords)
+            })
+            : users
+
         const filteredUsers = selectedProf
-            ? users.filter(
+            ? searchedUsers.filter(
                 (user) =>
                     JSON.stringify(user.profession) ===
                     JSON.stringify(selectedProf)
             )
-            : users
+            : searchedUsers
 
         const count = filteredUsers.length
         const sortedUsers = _.orderBy(
@@ -66,9 +93,6 @@ const UsersList = () => {
             [sortBy.order]
         )
         const usersCrop = paginate(sortedUsers, currentPage, pageSize)
-        const clearFilter = () => {
-            setSelectedProf()
-        }
 
         return (
             <div className="d-flex">
@@ -90,6 +114,7 @@ const UsersList = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
+                    <Search searchWords={searchWords} onChangeSearch={handleChangeSearch}/>
                     {count > 0 && (
                         <UserTable
                             users={usersCrop}
