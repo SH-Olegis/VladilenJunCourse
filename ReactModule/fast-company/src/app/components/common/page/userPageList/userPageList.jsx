@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
-import { paginate } from "../utils/paginate"
-import Pagination from "./pagination"
-import api from "../api"
-import GroupList from "./groupList"
-import SearchStatus from "./searchStatus"
-import UserTable from "./usersTable"
+import { paginate } from "../../../../utils/paginate";
+import Pagination from "../../pagination";
+import API from "../../../../api";
+import GroupList from "../../groupList";
+import SearchStatus from "../../../ui/searchStatus";
+import UserTable from "../../../ui/usersTable";
 import _ from "lodash"
-import Search from "./search"
+import Search from "../../search";
 
-const UsersList = () => {
+const UserPageList = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [professions, setProfession] = useState()
     const [selectedProf, setSelectedProf] = useState()
@@ -19,7 +19,7 @@ const UsersList = () => {
 
     const [users, setUsers] = useState()
     useEffect(() => {
-        api.users.fetchAll().then((data) => setUsers(data))
+        API.users.fetchAll().then((data) => setUsers(data))
     }, [])
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId))
@@ -35,7 +35,7 @@ const UsersList = () => {
     }
 
     useEffect(() => {
-        api.professions.fetchAll().then((data) => setProfession(data))
+        API.professions.fetchAll().then((data) => setProfession(data))
     }, [])
 
     useEffect(() => {
@@ -138,8 +138,8 @@ const UsersList = () => {
     }
     return "loading..."
 }
-UsersList.propTypes = {
+UserPageList.propTypes = {
     users: PropTypes.array
 }
 
-export default UsersList
+export default UserPageList

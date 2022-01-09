@@ -1,6 +1,7 @@
 import React from "react"
+import PropTypes from "prop-types"
 
-const Search = ({searchWords, onChangeSearch}) => {
+const Search = ({ searchWords, onChangeSearch }) => {
     return (
         <div className="input-group">
             <div className="w-100">
@@ -8,6 +9,11 @@ const Search = ({searchWords, onChangeSearch}) => {
             </div>
         </div>
     )
+}
+
+Search.propTypes = {
+    searchWords: PropTypes.string,
+    onChangeSearch: PropTypes.func
 }
 
 export default Search
