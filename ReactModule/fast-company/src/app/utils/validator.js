@@ -7,7 +7,11 @@ export function validator(data, config) {
         switch (validateMethod) {
         case "isRequired":
         {
-            isValid = !data.trim()
+            if (typeof data === "boolean") {
+                isValid = !data
+            } else {
+                isValid = !data.trim()
+            }
             break
         }
         case "isEmail":

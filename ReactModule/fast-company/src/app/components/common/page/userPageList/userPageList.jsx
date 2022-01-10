@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
-import { paginate } from "../../../../utils/paginate";
-import Pagination from "../../pagination";
-import API from "../../../../api";
-import GroupList from "../../groupList";
-import SearchStatus from "../../../ui/searchStatus";
-import UserTable from "../../../ui/usersTable";
+import { paginate } from "../../../../utils/paginate"
+import Pagination from "../../pagination"
+import API from "../../../../api"
+import GroupList from "../../groupList"
+import SearchStatus from "../../../ui/searchStatus"
+import UserTable from "../../../ui/usersTable"
 import _ from "lodash"
-import Search from "../../search";
+import Search from "../../search"
 
 const UserPageList = () => {
     const [currentPage, setCurrentPage] = useState(1)
