@@ -4,3 +4,5 @@ Rollup/build/
 Webpack/node_modules
 Webpack/dist
 ImportExport/node_modules
+ReactModule/**/node_modules
+ReactModule/**/public
